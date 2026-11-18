@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Timeline — Stuart Cannon Gray</title>
+  <meta name="author" content="Stuart Cannon Gray" />
+  <meta name="description" content="Customizable vertical and horizontal timeline built by Stuart Cannon Gray." />
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- =========================================================================
+       TOP NAVIGATION & QUICK CONTROLS
+       Provides instant toggling for Orientation, Theme, and the Customizer.
+       ========================================================================= -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span id="nav-title" class="brand-text">Timeline</span>
+      </div>
+
+      <div class="controls" role="toolbar" aria-label="Timeline Display Controls">
+        <!-- Orientation Switcher (Vertical vs. Horizontal) -->
+        <div class="segmented-control" role="group" aria-label="Timeline Orientation">
+          <button type="button" id="btn-vertical" class="seg-btn active" data-layout="vertical" aria-pressed="true">
+            Vertical
+          </button>
+          <button type="button" id="btn-horizontal" class="seg-btn" data-layout="horizontal" aria-pressed="false">
+            Horizontal
+          </button>
+        </div>
+
+        <!-- Light / Dark Theme Toggle -->
+        <button type="button" id="btn-theme" class="icon-btn" aria-label="Toggle dark mode" title="Toggle Light/Dark Mode">
+          <span id="theme-icon" aria-hidden="true">🌙</span>
+          <span id="theme-label" class="btn-label">Dark</span>
+        </button>
+
+        <!-- Open Personalization Drawer -->
+        <button type="button" id="btn-customize" class="primary-btn">
+          ⚙️ Customize
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       HERO / HEADER SECTION
+       Populated dynamically from config.js
+       ========================================================================= -->
+  <section class="hero">
+    <div class="container">
+      <p id="hero-eyebrow" class="eyebrow">CHRONOLOGY</p>
+      <h1 id="hero-title">Project &amp; Career Milestones</h1>
+      <p id="hero-subtitle" class="subtitle">
+        A chronological overview of key architectures, deployments, and milestones.
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       MAIN TIMELINE VIEWPORT
+       JS dynamically toggles classes between .layout-vertical & .layout-horizontal
+       ========================================================================= -->
+  <main class="timeline-wrapper">
+    <div id="horizontal-hint" class="horizontal-hint hidden">
+      Tip: Scroll horizontally, drag, or use Left/Right arrow keys to navigate.
+    </div>
+
+    <div id="timeline-container" class="timeline layout-vertical" aria-live="polite">
+      <!-- Timeline cards are injected here by app.js -->
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       FOOTER & AUTHOR ATTRIBUTION
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        Created &amp; authored by <strong id="footer-author">Stuart Cannon Gray</strong>.
+        Hosted on GitHub Pages.
+      </p>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       PERSONALIZATION DRAWER (SLIDE-OVER PANEL)
+       Allows live editing of settings, theme colors, and timeline events, plus
+       exporting an updated config.js file to commit directly to GitHub.
+       ========================================================================= -->
+  <div id="drawer-backdrop" class="drawer-backdrop hidden" aria-hidden="true"></div>
+  <aside id="customizer-drawer" class="drawer" aria-label="Personalization Settings" aria-hidden="true">
+    <div class="drawer-header">
+      <h2>Personalize Timeline</h2>
+      <button type="button" id="btn-close-drawer" class="icon-btn" aria-label="Close panel">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- General Metadata -->
+      <fieldset class="config-group">
+        <legend>General &amp; Author Info</legend>
+
+        <label class="field">
+          <span>Timeline Title</span>
+          <input type="text" id="cfg-title" />
+        </label>
+
+        <label class="field">
+          <span>Eyebrow Tag</span>
+          <input type="text" id="cfg-eyebrow" />
+        </label>
+
+        <label class="field">
+          <span>Subtitle / Description</span>
+          <textarea id="cfg-subtitle" rows="2"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Author Name</span>
+          <input type="text" id="cfg-author" />
+        </label>
+      </fieldset>
+
+      <!-- Appearance & Defaults -->
+      <fieldset class="config-group">
+        <legend>Appearance &amp; Defaults</legend>
+
+        <div class="field-row">
+          <label class="field">
+            <span>Accent Color</span>
+            <input type="color" id="cfg-accent" />
+          </label>
+
+          <label class="field">
+            <span>Card Density</span>
+            <select id="cfg-density">
+              <option value="comfortable">Comfortable</option>
+              <option value="compact">Compact</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="checkbox-field">
+          <input type="checkbox" id="cfg-show-tags" />
+          <span>Display category badges on cards</span>
+        </label>
+      </fieldset>
+
+      <!-- Event Manager -->
+      <fieldset class="config-group">
+        <legend>Timeline Events</legend>
+        <div id="event-editor-list" class="event-editor-list"></div>
+        <button type="button" id="btn-add-event" class="secondary-btn full-width">
+          + Add New Milestone
+        </button>
+      </fieldset>
+    </div>
+
+    <div class="drawer-footer">
+      <button type="button" id="btn-export-config" class="primary-btn full-width">
+        ⬇ Download Updated config.js
+      </button>
+      <button type="button" id="btn-reset-defaults" class="text-btn full-width">
+        Reset to Default Config
+      </button>
+    </div>
+  </aside>
+
+  <!-- Load Configuration First, Then Application Logic -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
