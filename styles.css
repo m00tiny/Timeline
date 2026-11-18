@@ -1,0 +1,599 @@
+/* ============================================================================
+   styles.css
+   Author: Stuart Cannon Gray
+   Description: Theme variables, vertical/horizontal timeline layouts, and UI.
+   ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+   1. DESIGN TOKENS & THEME VARIABLES
+   ---------------------------------------------------------------------------- */
+:root {
+  /* Customizable Brand Accent (overridden dynamically by config.js) */
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.12);
+
+  /* Light Mode Palette */
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --line-color: #cbd5e1;
+  --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.06);
+
+  /* Spacing & Sizing */
+  --card-padding: 1.5rem;
+  --radius: 12px;
+  --nav-height: 64px;
+}
+
+/* Dark Mode Palette Overrides */
+[data-theme="dark"] {
+  --bg-page: #0b1120;
+  --bg-surface: #1e293b;
+  --bg-elevated: #0f172a;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --line-color: #475569;
+  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Compact Density Modifier */
+[data-density="compact"] {
+  --card-padding: 1rem;
+}
+
+/* ----------------------------------------------------------------------------
+   2. BASE & RESET STYLES
+   ---------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ----------------------------------------------------------------------------
+   3. TOP NAVIGATION & CONTROLS
+   ---------------------------------------------------------------------------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--nav-height);
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+}
+
+.topbar-inner {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--accent);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Segmented Control for Layout Orientation */
+.segmented-control {
+  display: inline-flex;
+  background-color: var(--bg-elevated);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.seg-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.seg-btn.active {
+  background-color: var(--bg-surface);
+  color: var(--accent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.icon-btn,
+.primary-btn,
+.secondary-btn,
+.text-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.icon-btn,
+.secondary-btn {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.primary-btn {
+  background-color: var(--accent);
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.text-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+}
+
+.icon-btn:hover,
+.primary-btn:hover,
+.secondary-btn:hover {
+  opacity: 0.9;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------------------
+   4. HERO HEADER
+   ---------------------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 3.5rem 0 2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 0 auto;
+  max-width: 640px;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+/* ----------------------------------------------------------------------------
+   5. SHARED TIMELINE CARD STYLES
+   ---------------------------------------------------------------------------- */
+.timeline-wrapper {
+  padding: 1.5rem 0 4rem;
+}
+
+.timeline-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: var(--card-padding);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.timeline-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.card-date {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.card-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+.card-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.card-desc {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}
+
+/* ----------------------------------------------------------------------------
+   6. VERTICAL TIMELINE LAYOUT (DEFAULT)
+   Alternating left/right cards on desktop, single-column spine on mobile.
+   ---------------------------------------------------------------------------- */
+.timeline.layout-vertical {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+/* Center Vertical Spine */
+.timeline.layout-vertical::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background-color: var(--line-color);
+  transform: translateX(-50%);
+}
+
+.timeline.layout-vertical .timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 0 2.5rem 2.25rem;
+}
+
+/* Odd items on the left, Even items on the right */
+.timeline.layout-vertical .timeline-item:nth-child(odd) {
+  left: 0;
+}
+
+.timeline.layout-vertical .timeline-item:nth-child(even) {
+  left: 50%;
+}
+
+/* Node marker dot on the spine */
+.timeline.layout-vertical .timeline-node {
+  position: absolute;
+  top: 1.4rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  border: 3px solid var(--bg-page);
+  box-shadow: 0 0 0 2px var(--accent);
+  z-index: 2;
+}
+
+.timeline.layout-vertical .timeline-item:nth-child(odd) .timeline-node {
+  right: -7px;
+}
+
+.timeline.layout-vertical .timeline-item:nth-child(even) .timeline-node {
+  left: -7px;
+}
+
+/* Mobile Responsive Collapse for Vertical Layout */
+@media (max-width: 768px) {
+  .timeline.layout-vertical::before {
+    left: 28px;
+  }
+
+  .timeline.layout-vertical .timeline-item,
+  .timeline.layout-vertical .timeline-item:nth-child(even) {
+    width: 100%;
+    left: 0;
+    padding: 0 0 1.75rem 3.25rem;
+  }
+
+  .timeline.layout-vertical .timeline-item:nth-child(odd) .timeline-node,
+  .timeline.layout-vertical .timeline-item:nth-child(even) .timeline-node {
+    left: 21px;
+    right: auto;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   7. HORIZONTAL TIMELINE LAYOUT
+   Scrollable horizontal track with a continuous horizontal axis line.
+   ---------------------------------------------------------------------------- */
+.horizontal-hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.timeline.layout-horizontal {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 1.75rem;
+  overflow-x: auto;
+  padding: 2.5rem 2.5rem 2rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+
+/* Horizontal Track Line */
+.timeline.layout-horizontal::before {
+  content: "";
+  position: absolute;
+  top: 1.25rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--line-color);
+  min-width: max-content;
+}
+
+.timeline.layout-horizontal .timeline-item {
+  position: relative;
+  flex: 0 0 330px;
+  scroll-snap-align: start;
+  padding-top: 1rem;
+}
+
+/* Node marker dot on horizontal track */
+.timeline.layout-horizontal .timeline-node {
+  position: absolute;
+  top: -1.65rem;
+  left: 1.5rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  border: 3px solid var(--bg-page);
+  box-shadow: 0 0 0 2px var(--accent);
+  z-index: 2;
+}
+
+.timeline.layout-horizontal .timeline-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----------------------------------------------------------------------------
+   8. FOOTER & PERSONALIZATION DRAWER
+   ---------------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  z-index: 50;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(440px, 100vw);
+  background-color: var(--bg-surface);
+  border-left: 1px solid var(--border-color);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+}
+
+.drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-header,
+.drawer-footer {
+  padding: 1.15rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-footer {
+  border-top: 1px solid var(--border-color);
+  border-bottom: none;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.drawer-header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.config-group {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.config-group legend {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 0 0.4rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.field input[type="text"],
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.field input[type="color"] {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+/* Event Item Editor Cards inside Drawer */
+.event-editor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.event-editor-card {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.event-editor-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.btn-remove-event {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
