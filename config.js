@@ -9,7 +9,7 @@
 
 window.DEFAULT_TIMELINE_CONFIG = {
   // 1. Metadata & Author Attribution
-  author: "Stuart Cannon Gray",
+  author: "m00tiny",
   eyebrow: "CHRONOLOGY & MILESTONES",
   title: "Systems, Security & Engineering Timeline",
   subtitle:
