@@ -10,10 +10,10 @@
 window.DEFAULT_TIMELINE_CONFIG = {
   // 1. Metadata & Author Attribution
   author: "m00tiny",
-  eyebrow: "CHRONOLOGY & MILESTONES",
-  title: "Systems, Security & Engineering Timeline",
-  subtitle:
-    "Key architectural deployments, infrastructure milestones, and research initiatives.",
+  eyebrow: "Major Events and Milestones",
+  title: "Timeline of Events",
+  subtitle: 
+    "Major events, milestones, etc..",
 
   // 2. Default Visual Preferences
   defaultTheme: "light",        // Options: "light" | "dark"
@@ -21,7 +21,7 @@ window.DEFAULT_TIMELINE_CONFIG = {
   accentColor: "#2563eb",       // Any valid HEX color code
   density: "comfortable",       // Options: "comfortable" | "compact"
   showTags: true,               // Toggle category badges on timeline cards
-
+  
   // 3. Timeline Events Array (Ordered chronologically or reverse-chronologically)
   events: [
     {
